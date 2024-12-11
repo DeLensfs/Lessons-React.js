@@ -31,15 +31,26 @@ function App() {
         // Обновляем состояние, добавляя нового пользователя в список
         setUsers((prevUsers)=>[...prevUsers,userWithId]);
     }
+    const deleteUser=(idUser)=>{
+        setUsers(users.filter((el)=>el.id!==idUser));
+    }
+    // Функция для редактирования пользователя
+    const editUser = (updatedUser) => {
+        setUsers((prevUsers) =>
+            prevUsers.map((user) =>
+                user.id === updatedUser.id ? { ...user, ...updatedUser } : user
+            )
+        );
+    };
 
     return (
         <div className="App">
             <Header title="Список пользователей"/>
             <main>
-                <Users users={users}/>
+                <Users users={users} onEdit={editUser} onDelete={deleteUser}/>
             </main>
             <aside>
-                <AddUser onAdd={addUser}/>
+                <AddUser  onAdd={addUser}/>
             </aside>
         </div>
     );
